@@ -1,0 +1,16 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:33 2021
+        MODULE INIT_GRID__genmod
+          INTERFACE 
+            SUBROUTINE INIT_GRID(NTOTAL,HSML,GRID,NGRIDX,GHSMLX,MAXGRIDX&
+     &,MINGRIDX,DGEOMX)
+              INTEGER(KIND=4) :: NTOTAL
+              REAL(KIND=8) :: HSML
+              INTEGER(KIND=4) :: GRID(100,100,1)
+              INTEGER(KIND=4) :: NGRIDX(3)
+              INTEGER(KIND=4) :: GHSMLX(3)
+              REAL(KIND=8) :: MAXGRIDX(3)
+              REAL(KIND=8) :: MINGRIDX(3)
+              REAL(KIND=8) :: DGEOMX(3)
+            END SUBROUTINE INIT_GRID
+          END INTERFACE 
+        END MODULE INIT_GRID__genmod

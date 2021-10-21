@@ -1,0 +1,18 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:31 2021
+        MODULE DIRECT_FIND__genmod
+          INTERFACE 
+            SUBROUTINE DIRECT_FIND(ITIMESTEP,NTOTAL,HSML,X,NIAC,PAIR_I, &
+     &PAIR_J,W,DWDX,COUNTIAC)
+              INTEGER(KIND=4) :: ITIMESTEP
+              INTEGER(KIND=4) :: NTOTAL
+              REAL(KIND=8) :: HSML(100000)
+              REAL(KIND=8) :: X(3,100000)
+              INTEGER(KIND=4) :: NIAC
+              INTEGER(KIND=4) :: PAIR_I(20000000)
+              INTEGER(KIND=4) :: PAIR_J(20000000)
+              REAL(KIND=8) :: W(20000000)
+              REAL(KIND=8) :: DWDX(3,20000000)
+              INTEGER(KIND=4) :: COUNTIAC(100000)
+            END SUBROUTINE DIRECT_FIND
+          END INTERFACE 
+        END MODULE DIRECT_FIND__genmod

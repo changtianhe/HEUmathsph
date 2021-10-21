@@ -1,0 +1,12 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:33 2021
+        MODULE VISCOSITY__genmod
+          INTERFACE 
+            SUBROUTINE VISCOSITY(NTOTAL,ITYPE,X,RHO,ETA)
+              INTEGER(KIND=4) :: NTOTAL
+              INTEGER(KIND=4) :: ITYPE(100000)
+              REAL(KIND=8) :: X(3,100000)
+              REAL(KIND=8) :: RHO(100000)
+              REAL(KIND=8) :: ETA(100000)
+            END SUBROUTINE VISCOSITY
+          END INTERFACE 
+        END MODULE VISCOSITY__genmod

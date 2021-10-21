@@ -1,0 +1,17 @@
+        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:35 2021
+        MODULE SUM_DENSITY__genmod
+          INTERFACE 
+            SUBROUTINE SUM_DENSITY(NTOTAL,HSML,MASS,NIAC,PAIR_I,PAIR_J,W&
+     &,ITYPE,RHO)
+              INTEGER(KIND=4) :: NTOTAL
+              REAL(KIND=8) :: HSML(100000)
+              REAL(KIND=8) :: MASS(100000)
+              INTEGER(KIND=4) :: NIAC
+              INTEGER(KIND=4) :: PAIR_I(20000000)
+              INTEGER(KIND=4) :: PAIR_J(20000000)
+              REAL(KIND=8) :: W(20000000)
+              INTEGER(KIND=4) :: ITYPE(100000)
+              REAL(KIND=8) :: RHO(100000)
+            END SUBROUTINE SUM_DENSITY
+          END INTERFACE 
+        END MODULE SUM_DENSITY__genmod
