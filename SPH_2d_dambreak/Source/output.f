@@ -1,5 +1,5 @@
       subroutine output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal,
-     &itimestep) 
+     &nvirt, itimestep) 
       
 c----------------------------------------------------------------------           
 c     Subroutine for saving particle information to external disk file
@@ -21,13 +21,12 @@ c     ntotal-- total particle number                                [in]
       integer itype(maxn), ntotal
       double precision x(maxdim, maxn), vx(maxdim, maxn), mass(maxn), 
      &       rho(maxn),p(maxn), u(maxn), c(maxn), hsml(maxn)
-      integer i, d, npart  
+      integer i, d, npart ,nvirt 
 
 c file_id表示输出文件的保存时间步 filename 输出文件名 
       integer itimestep 
       character(len=100) file_id
-      character(len=100) filename_f_xv, filename_f_state,
-     &                    filename_f_other
+      character(len=100) filename_f_xv, filename_vp_xv
 
 c 将itimestep赋值给字符串类型的file_id
       select case(itimestep)
@@ -51,24 +50,33 @@ c 更改文件名为 f_xv+当前时间步 f_state+当前时间步 f_other+当前时间步
 c     file_name = 'file' // trim(adjustl(file_id)) // '.dat'  
   
       filename_f_xv = 'f_xv'//trim(file_id)//'.dat'
-      filename_f_state = 'f_state'//trim(file_id)// '.dat'
-      filename_f_other = 'f_other'//trim(file_id)// '.dat'
+      filename_vp_xv = 'vp_xv'//trim(file_id)// '.dat'
 
 c      write(*,*) filename_f_xv
 
       open(11,file='data\'//trim(filename_f_xv))
+      open(12,file='data\'//trim(filename_vp_xv))
 
       write(11,*)'TITLE="fluid particles"'
-      write(11,*)'VARIABLES="i","X","Y","VX","VY","mass","density",
-     &"pressure"'
-      write(11,*)' ZONE I=100,J= 50, F=POINT'
+      write(11,*)'VARIABLES="X","Y","VX","VY","density","pressure"'
+      write(11,*)' ZONE I=50,J= 100, F=POINT'
       do i = 1, ntotal         
-        write(11,1001) i,(x(d, i), d=1,dim),(vx(d, i),d = 1,dim),
-     &                 mass(i),rho(i),p(i)                 
+        write(11,1001) (x(d, i), d=1,dim),(vx(d, i),d = 1,dim),
+     &                rho(i),p(i)                 
       enddo 
-      
-1001  format(1x, I6, 7(2x, e16.8))
-                                      
       close(11)
+      
+      write(12,*)'TITLE=" boundary particles"'
+      write(12,*)'VARIABLES="X","Y","VX","VY","density","pressure"'
+      write(12,*)' ZONE I=803, F=POINT'
+      do i = ntotal + 1, ntotal + nvirt         
+        write(12,1001) (x(d, i), d=1,dim),(vx(d, i),d = 1,dim),
+     &                rho(i),p(i)                 
+      enddo 
+      close(12)
+      
+1001  format( 6(2x, e16.8))
+                                      
+      
 
       end           

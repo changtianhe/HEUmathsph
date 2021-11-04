@@ -1,4 +1,4 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:35 2021
+        !COMPILER-GENERATED INTERFACE MODULE: Wed Nov 03 21:40:38 2021
         MODULE LINK_LIST__genmod
           INTERFACE 
             SUBROUTINE LINK_LIST(ITIMESTEP,NTOTAL,HSML,X,NIAC,PAIR_I,   &
@@ -8,10 +8,10 @@
               REAL(KIND=8) :: HSML
               REAL(KIND=8) :: X(3,100000)
               INTEGER(KIND=4) :: NIAC
-              INTEGER(KIND=4) :: PAIR_I(20000000)
-              INTEGER(KIND=4) :: PAIR_J(20000000)
-              REAL(KIND=8) :: W(20000000)
-              REAL(KIND=8) :: DWDX(3,20000000)
+              INTEGER(KIND=4) :: PAIR_I(10000000)
+              INTEGER(KIND=4) :: PAIR_J(10000000)
+              REAL(KIND=8) :: W(10000000)
+              REAL(KIND=8) :: DWDX(3,10000000)
               INTEGER(KIND=4) :: COUNTIAC(100000)
             END SUBROUTINE LINK_LIST
           END INTERFACE 

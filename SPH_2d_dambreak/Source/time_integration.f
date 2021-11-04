@@ -28,7 +28,7 @@ c      dt-- timestep                                             [input]
       double precision x(maxdim, maxn), vx(maxdim, maxn), mass(maxn), 
      &       rho(maxn), p(maxn), u(maxn), c(maxn), s(maxn), e(maxn), 
      &       hsml(maxn), dt
-      integer i, j, k, itimestep, d, current_ts, nstart        
+      integer i, j, k, itimestep, d, current_ts, nstart ,nvirt       
       double precision  x_min(maxdim, maxn), 
      &       v_min(maxdim, maxn), u_min(maxn),
      &       rho_min(maxn), dx(maxdim,maxn), dvx(maxdim, maxn),du(maxn),  
@@ -43,6 +43,7 @@ c      dt-- timestep                                             [input]
         enddo
       enddo  
 
+      nvirt = 0
       nstart=0
       time=0.0
       current_ts=0
@@ -54,7 +55,11 @@ c      dt-- timestep                                             [input]
          write(*,*)'______________________________________________'
          write(*,*)'  current number of time step =', itimestep,
      &              ' current time=', real(time+dt)
-         write(*,*)'______________________________________________'
+         write(*,*)'______________________________________________' 
+         write(*,*)
+         write(*,*)'Number of total particles:',ntotal+nvirt
+        write(*,*)'fluid particles:',ntotal,'  virtual particles:',nvirt
+
         endif      
       
 c     If not first time step, then update thermal energy, density and 
@@ -62,7 +67,7 @@ c     velocity half a time step
 
         if (itimestep .ne. 1) then
 
-          do i = 1, ntotal        
+          do i = 1, ntotal + nvirt      
             u_min(i) = u(i)
             temp_u=0.
 	    if (dim.eq.1) temp_u=-nsym*p(i)*vx(1,i)/x(1,i)/rho(i)
@@ -78,7 +83,9 @@ c     velocity half a time step
            
             do d = 1, dim
               v_min(d, i) = vx(d, i)
-              vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i)
+              if (i .le. ntotal )then
+                vx(d, i) = vx(d, i) + (dt/2.)*dvx(d, i)
+              endif
             enddo
           enddo 
           
@@ -87,11 +94,11 @@ c     velocity half a time step
 c---  Definition of variables out of the function vector:    
       
         call single_step(itimestep, dt, ntotal, hsml, mass, x, vx, u, s, 
-     &       rho, p, t, tdsdt, dx, dvx, du, ds, drho,itype, av)  
+     &       rho, p, t, tdsdt, dx, dvx, du, ds, drho,itype, av,nvirt)  
                   
         if (itimestep .eq. 1) then
        
-          do i=1,ntotal
+          do i=1,ntotal + nvirt
             temp_u=0.
    	    if (dim.eq.1) temp_u=-nsym*p(i)*vx(1,i)/x(1,i)/rho(i)        
             u(i) = u(i) + (dt/2.)*(du(i) + temp_u)
@@ -105,13 +112,15 @@ c---  Definition of variables out of the function vector:
          
             do d = 1, dim        
               vx(d, i) = vx(d, i) + (dt/2.) * dvx(d, i) + av(d, i)
-              x(d, i) = x(d, i) + dt * vx(d, i)		  
+              if (i .le. ntotal )then
+                x(d, i) = x(d, i) + dt * vx(d, i)		 
+              endif 
             enddo  	            
           enddo 
                   
         else   
                     
-          do i=1,ntotal            
+          do i=1,ntotal + nvirt           
             temp_u=0.
 	    if (dim.eq.1) temp_u=-nsym*p(i)*vx(1,i)/x(1,i)/rho(i)                       
             u(i) = u_min(i) + dt*(du(i)+temp_u)
@@ -125,7 +134,9 @@ c---  Definition of variables out of the function vector:
                   
             do d = 1, dim                   
               vx(d, i) = v_min(d, i) + dt * dvx(d, i) + av(d, i)
-              x(d, i) = x(d, i) + dt * vx(d, i)                  
+              if (i .le. ntotal )then
+                x(d, i) = x(d, i) + dt * vx(d, i)
+              endif
             enddo
           enddo
         
@@ -134,21 +145,20 @@ c---  Definition of variables out of the function vector:
         time = time + dt
 
 	if (mod(itimestep,save_step).eq.0) then
-          call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal, 
-     &itimestep)
+          call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal,
+     & nvirt, itimestep)
 	endif 
 
-        if (mod(itimestep,print_step).eq.0) then
-          write(*,*)
-         do d=1,dim
-          write(*,101) d, '方向','x','velocity', 'dvx'    
-          write(*,100)x(d,moni_particle), vx(d,moni_particle), 
+      if (mod(itimestep,print_step).eq.0) then
+        do d=1,dim
+        write(*,101) d, '方向','  x','  velocity', '  dvx'    
+        write(*,100)x(d,moni_particle), vx(d,moni_particle),
      &                dvx(d,moni_particle)  
-         enddo  
-        endif
+        enddo  
+      endif
         
-101     format(1x,I1,a4,3(5x,a10))	 
-100     format(6x,3(2x,e15.6))
+101     format(1x,I1,a4,4(3x,a15))
+100     format(1x,11x,3(3x,e14.6))
 	 
       enddo
 

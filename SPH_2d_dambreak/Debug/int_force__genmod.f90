@@ -1,4 +1,4 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:32 2021
+        !COMPILER-GENERATED INTERFACE MODULE: Wed Nov 03 21:40:40 2021
         MODULE INT_FORCE__genmod
           INTERFACE 
             SUBROUTINE INT_FORCE(ITIMESTEP,DT,NTOTAL,HSML,MASS,VX,NIAC, &
@@ -12,9 +12,9 @@
               INTEGER(KIND=4) :: NIAC
               REAL(KIND=8) :: RHO(100000)
               REAL(KIND=8) :: ETA(100000)
-              INTEGER(KIND=4) :: PAIR_I(20000000)
-              INTEGER(KIND=4) :: PAIR_J(20000000)
-              REAL(KIND=8) :: DWDX(3,20000000)
+              INTEGER(KIND=4) :: PAIR_I(10000000)
+              INTEGER(KIND=4) :: PAIR_J(10000000)
+              REAL(KIND=8) :: DWDX(3,10000000)
               REAL(KIND=8) :: U(100000)
               INTEGER(KIND=4) :: ITYPE(100000)
               REAL(KIND=8) :: X(3,100000)

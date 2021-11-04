@@ -1,8 +1,8 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:30 2021
+        !COMPILER-GENERATED INTERFACE MODULE: Wed Nov 03 21:40:36 2021
         MODULE OUTPUT__genmod
           INTERFACE 
             SUBROUTINE OUTPUT(X,VX,MASS,RHO,P,U,C,ITYPE,HSML,NTOTAL,    &
-     &ITIMESTEP)
+     &NVIRT,ITIMESTEP)
               REAL(KIND=8) :: X(3,100000)
               REAL(KIND=8) :: VX(3,100000)
               REAL(KIND=8) :: MASS(100000)
@@ -13,6 +13,7 @@
               INTEGER(KIND=4) :: ITYPE(100000)
               REAL(KIND=8) :: HSML(100000)
               INTEGER(KIND=4) :: NTOTAL
+              INTEGER(KIND=4) :: NVIRT
               INTEGER(KIND=4) :: ITIMESTEP
             END SUBROUTINE OUTPUT
           END INTERFACE 

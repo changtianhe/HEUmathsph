@@ -1,5 +1,5 @@
       subroutine single_step(itimestep, dt, ntotal, hsml, mass, x, vx,  
-     &           u, s,rho, p, t, tdsdt, dx, dvx, du, ds, drho,itype, av) 
+     &     u, s,rho, p, t, tdsdt, dx, dvx, du, ds, drho,itype, av,nvirt) 
 
 c----------------------------------------------------------------------
 c   Subroutine to determine the right hand side of a differential 
@@ -54,8 +54,7 @@ c     av       :  Monaghan average velocity                        [out]
  
 c---  Positions of virtual (boundary) particles: 
 
-      nvirt = 0
-      if (virtual_part) then 
+      if (virtual_part .and.(itimestep .eq. 1) ) then 
         call virt_part(itimestep, ntotal,nvirt,hsml,mass,x,vx,
      &       rho,u,p,itype)
       endif 
@@ -78,7 +77,7 @@ c---  Density approximation or change rate
       
       if (summation_density) then      
         call sum_density(ntotal+nvirt,hsml,mass,niac,pair_i,pair_j,w,
-     &       itype,rho)          
+     &       itype,rho,itimestep)          
       else             
         call con_density(ntotal+nvirt,mass,niac,pair_i,pair_j,
      &       dwdx,vx, itype,x,rho, drho)         
@@ -106,7 +105,7 @@ c---  External forces:
 
 c     Calculating the neighboring particles and undating HSML
       
-      if (sle.ne.0) call h_upgrade(dt,ntotal, mass, vx, rho, niac, 
+      if (sle.ne.0) call h_upgrade(dt,ntotal+nvirt, mass, vx, rho, niac, 
      &                   pair_i, pair_j, dwdx, hsml)
 
       if (heat_artificial) call art_heat(ntotal+nvirt,hsml,
@@ -114,7 +113,7 @@ c     Calculating the neighboring particles and undating HSML
      
 c     Calculating average velocity of each partile for avoiding penetration
 
-      if (average_velocity) call av_vel(ntotal,mass,niac,pair_i,
+      if (average_velocity) call av_vel(ntotal+nvirt,mass,niac,pair_i,
      &                           pair_j, w, vx, rho, av) 
 
 c---  Convert velocity, force, and energy to f and dfdt  

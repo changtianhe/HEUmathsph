@@ -109,6 +109,7 @@ c     Statistics for the interaction
  
       if (mod(itimestep,print_step).eq.0) then
         if (int_stat) then
+          write(*,*)
           print *,' >> Statistics: interactions per particle:'
           print *,'**** Particle:',maxp, ' maximal interactions:',maxiac
           print *,'**** Particle:',minp, ' minimal interactions:',miniac

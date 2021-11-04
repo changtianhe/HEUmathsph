@@ -30,8 +30,8 @@ c     1-dim. problem: maxngx = maxn ,  maxngy = maxngz = 1
 c     2-dim. problem: maxngx = maxngy ~ sqrt(maxn) ,  maxngz = 1
 c     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
       integer maxngx,maxngy,maxngz
-      parameter ( maxngx  = 100        ,
-     &            maxngy  = 100        ,
+      parameter ( maxngx  = 300        ,
+     &            maxngy  = 300        ,
      &            maxngz  = 1          )      
       integer itimestep, ntotal, niac, pair_i(max_interaction),
      &        pair_j(max_interaction), countiac(maxn)

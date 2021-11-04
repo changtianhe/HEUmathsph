@@ -18,7 +18,7 @@ num=data(:,1);
 x=data(:,2);
 y=data(:,3);
 plot(x,y,'.')
-data=load('..\..\data\xv_vp.dat'); 
+data=load('..\..\data\vp_xv400.dat'); 
 num=data(:,1);
 x=data(:,2);
 y=data(:,3);

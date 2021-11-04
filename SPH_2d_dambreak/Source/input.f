@@ -56,15 +56,15 @@ c         read(2,*)im, mass(i), rho(i), p(i), u(i)
 !     &                      itype, hsml, ntotal)
       if (dambreak_2d) call dam_break_2d(x, vx, mass, rho, p, u, 
      &                      itype, hsml, ntotal)
-      write(11,*)'TITLE="fluid particles"'
-      write(11,*)'VARIABLES="i","X","Y","VX","VY","mass","density",
-     &"pressure"'
-      write(11,*)' ZONE I=100,J= 50, F=POINT'
+      write(1,*)'TITLE="fluid particles"'
+      write(1,*)'VARIABLES="X","Y","VX","VY","density","pressure"'
+      write(1,*)' ZONE I=50,J= 100, F=POINT'
         do i = 1, ntotal 
-          write(1,1001) i, (x(d, i),d = 1, dim), (vx(d, i),d = 1, dim)        
+          write(1,1001) (x(d, i),d = 1, dim), (vx(d, i),d = 1, dim),
+     &                rho(i),p(i) 
           write(3,1003) i, itype(i), hsml(i)    
         enddo   
-1001    format(1x, I6, 7(2x, e16.8)) 
+1001    format(6(2x, e16.8)) 
 1003    format(1x, I5, 2x, I2, 2x, e16.8) 
         write(*,*)'  **************************************************'
         write(*,*)'      Initial particle configuration generated   '       
@@ -130,12 +130,14 @@ c     Giving mass and smoothing length as well as other data.
 	vx(2, i) = 0.  
        p(i)= 1000.*9.81*(h_swl - x(2,i)) 
 c     rho (i)= 1000.
-      rho (i)= 1000.*(1+7*p(i)/(1000.*(100*sqrt(9.81*h_swl)**2)))**(1/7)  
-       mass(i) = dx*dy*rho (i) 
+      rho (i)=1000.*(1+7*9.81*(h_swl - x(2,i))/
+     &       (100*sqrt(9.81*h_swl)**2))**(1./7)
+      !rho (i)=1000.*(1+7*p(i)/(1000.*(100*sqrt(9.81*h_swl)**2)))**(1./7)  
+       mass(i) = dx*dy*1000. 
        u(i)=357.1
        itype(i) = 2
 c      hsml(i) = 2. * sqrt(2 * dx**2 )
-       hsml(i) = 1.4 *dx
+       hsml(i) = 1. *dx
       enddo  
 
       end	

@@ -1,5 +1,5 @@
       subroutine sum_density(ntotal,hsml,mass,niac,pair_i,pair_j,w,
-     &           itype,rho)
+     &           itype,rho,itimestep)
 
 C----------------------------------------------------------------------
 C   Subroutine to calculate the density with SPH summation algorithm.
@@ -23,7 +23,7 @@ c     rho    : Density                                             [out]
      &        pair_j(max_interaction), itype(maxn)  
       double precision hsml(maxn),mass(maxn), w(max_interaction),
      &       rho(maxn) 
-      integer i, j, k, d      
+      integer i, j, k, d  ,itimestep    
       double precision selfdens, hv(maxdim), r, wi(maxn)     
 
 c     wi(maxn)---integration of the kernel itself
@@ -67,8 +67,8 @@ c     Calculate SPH sum for rho:
       enddo
 
 c     Thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
-     
-      if (nor_density) then 
+c     密度正则化要每隔30时间步使用一次，而不用每次使用     
+      if (nor_density .and. mod(itimestep,30).eq.0) then 
         do i=1, ntotal
           rho(i)=rho(i)/wi(i)
         enddo

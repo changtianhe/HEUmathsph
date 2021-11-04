@@ -21,7 +21,7 @@ c     e-- total energy of particles                                [out]
       implicit none     
       include 'param.inc'
 
-      integer ntotal, itype(maxn), maxtimestep, d, m, i, yesorno      
+      integer ntotal, itype(maxn), maxtimestep, d, m, i, yesorno,nvirt     
       double precision x(maxdim,maxn), vx(maxdim, maxn), 
      &                   mass(maxn),  rho(maxn),
      &     p(maxn), u(maxn), c(maxn), s(maxn), e(maxn), hsml(maxn), dt
@@ -41,15 +41,16 @@ c     e-- total energy of particles                                [out]
       read(*,*) maxtimestep      
       call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, 
      &     hsml, ntotal, maxtimestep, dt )
-      call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal,
-     &     maxtimestep)      
+      call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal,nvirt,
+     &     maxtimestep)
+      write(*,*)'  ***************************************************'
+      call time_print
+      call time_elapsed(s2)      
+      write (*,*)'        Elapsed CPU time = ', s2-s1
       write(*,*)'  ***************************************************'
       write(*,*) 'Are you going to run more time steps ? (0=No, 1=yes)'
       write(*,*)'  ***************************************************'
       read (*,*) yesorno     
       if (yesorno.ne.0) go to 1
-      call time_print
-      call time_elapsed(s2)      
-      write (*,*)'        Elapsed CPU time = ', s2-s1
-                           
+                         
       end

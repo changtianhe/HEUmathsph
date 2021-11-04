@@ -1,4 +1,4 @@
-        !COMPILER-GENERATED INTERFACE MODULE: Thu Oct 21 16:19:35 2021
+        !COMPILER-GENERATED INTERFACE MODULE: Wed Nov 03 21:40:36 2021
         MODULE CON_DENSITY__genmod
           INTERFACE 
             SUBROUTINE CON_DENSITY(NTOTAL,MASS,NIAC,PAIR_I,PAIR_J,DWDX, &
@@ -6,9 +6,9 @@
               INTEGER(KIND=4) :: NTOTAL
               REAL(KIND=8) :: MASS(100000)
               INTEGER(KIND=4) :: NIAC
-              INTEGER(KIND=4) :: PAIR_I(20000000)
-              INTEGER(KIND=4) :: PAIR_J(20000000)
-              REAL(KIND=8) :: DWDX(3,20000000)
+              INTEGER(KIND=4) :: PAIR_I(10000000)
+              INTEGER(KIND=4) :: PAIR_J(10000000)
+              REAL(KIND=8) :: DWDX(3,10000000)
               REAL(KIND=8) :: VX(3,100000)
               INTEGER(KIND=4) :: ITYPE(100000)
               REAL(KIND=8) :: X(3,100000)

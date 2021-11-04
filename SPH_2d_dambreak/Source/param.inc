@@ -11,7 +11,7 @@ c     maxn    : Maximum number of particles
 c     max_interation : Maximum number of interaction pairs
       integer maxn,max_interaction
       parameter ( maxn    = 100000    ,
-     &            max_interaction = 200 * maxn )
+     &            max_interaction = 100 * maxn )
 
 c     Parameters for the computational geometry,  
 c     x_maxgeom : Upper limit of allowed x-regime 
@@ -58,7 +58,7 @@ c         = 3, Quintic kernel (Morris 1997) (≤ª≥£”√£©
 c		  = 4, Wendland Quintic (Wendland, 1995)
 c	      = 5, new kernel (hebangqi)
       integer skf 
-      parameter(skf = 2)
+      parameter(skf = 1)
 
 
 c     Switches for different senarios
@@ -95,10 +95,10 @@ c                    .false.: No normalization.
       parameter ( vp_input  = .false.  )
       parameter ( visc  = .false.  )
       parameter ( ex_force  = .true.)
-      parameter ( visc_artificial  = .false. )
+      parameter ( visc_artificial  = .true. )
       parameter ( heat_artificial  = .false. )
       parameter ( self_gravity  = .true. )      
-      parameter ( nor_density  = .true. )      
+      parameter ( nor_density  = .false. )      
 
 c     Symmetry of the problem
 c     nsym = 0 : no symmetry,
@@ -117,7 +117,7 @@ c     moni_particle: The particle number for information monitoring.
       parameter ( int_stat = .true. )
       integer print_step, save_step, moni_particle
       parameter ( print_step = 200 ,
-     &            save_step = 100,
+     &            save_step = 200,
      &            moni_particle = 400   )
            
       double precision pi, g

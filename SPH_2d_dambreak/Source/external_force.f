@@ -50,7 +50,7 @@ c      endif
 
 c     Boundary particle force and penalty anti-penetration force. 
 c     rr0 截止半径，表示边界粒子对流体粒子产生排斥力的作用范围，一般取水粒子初始间距大小
-      rr0 = 0.02
+      rr0 = 0.01
       v_max = sqrt(9.8*1.)
       dd = v_max**2
       p1 = 12
