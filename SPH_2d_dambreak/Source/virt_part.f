@@ -123,9 +123,9 @@ c     ÓÒ±ß½çµÚ¶þ²ã
 
 	do i = 1, nvirt
 	 p(ntotal + i) = 1000.*9.8*(h_swl - x(2,ntotal + i))
-c      rho (ntotal + i)=1000.
-       rho (ntotal + i)=1000.*(1+7*9.81*(h_swl 
-     &  - x(2,ntotal + i))/(100*sqrt(9.81*h_swl)**2))**(1./7)
+       rho (ntotal + i)=1000.
+c       rho (ntotal + i)=1000.*(1+7*9.81*(h_swl 
+c     &  - x(2,ntotal + i))/(100*sqrt(9.81*h_swl)**2))**(1./7)
 c         rho (ntotal + i)=1000.*(1+7*p(ntotal + i)/
 c     & (1000.*(100.*sqrt(9.81*h_swl)**2)))**(1/7)
 	 mass(ntotal + i) = 1000. * dx * dx
@@ -141,7 +141,7 @@ c     & (1000.*(100.*sqrt(9.81*h_swl)**2)))**(1/7)
       write(virtnumber,* ) nvirt
       string_name = 'ZONE I='//trim(adjustl(virtnumber))//' F=POINT'
       
-      if (mod(itimestep,save_step).eq.0) then
+      if (itimestep.eq.1) then
         open(1,file="data\vp_xv0.dat")
 
        write(1,*)'TITLE="initital distribution  of boundary particles"'

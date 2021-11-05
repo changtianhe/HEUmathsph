@@ -42,8 +42,11 @@ c         = 3, Quintic kernel (Morris 1997)
       else if (skf.eq.4) then 
         scale_k = 2
       else if (skf.eq.5) then 
-        scale_k = 4
+        scale_k = 2
+      else if (skf.eq.6) then 
+        scale_k = 2
       endif 
+      
      
       do i=1,ntotal
         countiac(i) = 0

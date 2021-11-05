@@ -68,9 +68,12 @@ c     Calculate SPH sum for rho:
 
 c     Thirdly, calculate the normalized rho, rho=sum(rho)/sum(w)
 c     密度正则化要每隔30时间步使用一次，而不用每次使用     
-      if (nor_density .and. mod(itimestep,30).eq.0) then 
+c      if (nor_density .and. mod(itimestep,10).eq.0) then 
+       if (nor_density ) then
         do i=1, ntotal
           rho(i)=rho(i)/wi(i)
+          if (rho(i).lt.990.) rho(i) = 990.
+          if (rho(i).gt.1015.) rho(i) = 1015.
         enddo
       endif 
       

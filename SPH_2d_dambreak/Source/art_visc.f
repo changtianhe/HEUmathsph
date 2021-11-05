@@ -36,7 +36,7 @@ c     dedt   : Change of specific internal energy                  [out]
 c     Parameter for the artificial viscosity:
 c     Shear viscosity
 c     parameter( alpha = 1.e0   )
-      parameter( alpha = 3.e-1   )
+      parameter( alpha = 1.e-1   )
      
 c     Bulk viscosity
 c     parameter( beta  = 1.e0  ) 

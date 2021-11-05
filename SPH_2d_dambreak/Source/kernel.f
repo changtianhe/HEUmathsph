@@ -6,6 +6,9 @@ c   derivatives dwdxij.
 c     if skf = 1, cubic spline kernel by W4 - Spline (Monaghan 1985)
 c            = 2, Gauss kernel   (Gingold and Monaghan 1981) 
 c            = 3, Quintic kernel (Morris 1997)
+c		     = 4, Wendland Quintic (Wendland, 1995)
+c            = 5, new kernel 1 (hebangqi，一阶导单调递增改善压缩失稳)
+c            = 6，new kernel 2 （杨秀峰，2012，一阶导单调递增改善压缩失稳）
 
 c     r    : Distance between particles i and j                     [in]
 c     dx   : x-, y- and z-distance between i and j                  [in]  
@@ -121,7 +124,8 @@ c     dwdx : Derivative of kernel with respect to x, y and z       [out]
 	if(q.ge.0.and.q.le.2) then
 	  w = factor * (2.*q - 1)*(1 - q/2.)**4 
           do d = 1, dim
-            dwdx(d) = factor *(2.*(1-q/2.)**4 - (4.*q +1)*(1-q/2.)**3)
+            dwdx(d)=factor*(2.*(1-q/2.)**4-(4.*q +2.)*(1-q/2.)**3)
+     &                /hsml*(dx(d)/r) 
           enddo 
 	else
 	  w = 0.
@@ -145,15 +149,45 @@ c     dwdx : Derivative of kernel with respect to x, y and z       [out]
 	if(q.ge.0.and.q.le.2) then
           w = factor * ( (16*q+33)*(2-q)**2 )
           do d= 1, dim
-            dwdx(d) = factor * ( ( (q -2)**2 )*(64*q+67) )
+            dwdx(d) = factor*(16*(2-q)**2+(2*q-4)*(16*q+33))
+     &                /hsml*(dx(d)/r)
           enddo 
         else   
 	  w = 0.
           do d = 1, dim
             dwdx(d) = 0.
           enddo  
-        endif                     
-                
+        endif 
+        
+        else if (skf.eq.6) then	
+      
+        if (dim.eq.1) then
+          factor = 1.e0 / (7.e0*hsml)
+        elseif (dim.eq.2) then
+          factor = 1.e0 / (3.e0*pi*hsml*hsml)
+        elseif (dim.eq.3) then
+          factor = 15.e0 / (62.e0*pi*hsml*hsml*hsml)
+        else
+         print *,' >>> Error <<< : Wrong dimension: Dim =',dim
+         stop
+        endif              
+	  if(q.ge.0.and.q.lt.1) then
+          w = factor * (q **3 -6*q + 6)
+          do d= 1, dim
+            dwdx(d) = factor * ( 3*q**2 -6)/hsml*(dx(d)/r)
+          enddo 
+	  else if(q.gt.1.and.q.lt.2) then
+          w = factor * (2-q)**3
+          do d= 1, dim
+            dwdx(d) = factor * (-3*(q-2)**2)/ hsml*(dx(d)/r) 
+          enddo 
+        else   
+	    w = 0.
+          do d = 1, dim
+            dwdx(d) = 0.
+          enddo  
+        endif
+          
       endif 
 		
       end

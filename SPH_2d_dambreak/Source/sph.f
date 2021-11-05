@@ -40,7 +40,7 @@ c     e-- total energy of particles                                [out]
       write(*,*)'  ***************************************************'
       read(*,*) maxtimestep      
       call time_integration(x, vx, mass, rho, p, u, c, s, e, itype, 
-     &     hsml, ntotal, maxtimestep, dt )
+     &     hsml, ntotal,nvirt, maxtimestep, dt )
       call output(x, vx, mass, rho, p, u, c, itype, hsml, ntotal,nvirt,
      &     maxtimestep)
       write(*,*)'  ***************************************************'

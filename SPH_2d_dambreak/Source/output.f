@@ -59,7 +59,7 @@ c      write(*,*) filename_f_xv
 
       write(11,*)'TITLE="fluid particles"'
       write(11,*)'VARIABLES="X","Y","VX","VY","density","pressure"'
-      write(11,*)' ZONE I=50,J= 100, F=POINT'
+      write(11,*)' ZONE I=50,J= 50, F=POINT'
       do i = 1, ntotal         
         write(11,1001) (x(d, i), d=1,dim),(vx(d, i),d = 1,dim),
      &                rho(i),p(i)                 

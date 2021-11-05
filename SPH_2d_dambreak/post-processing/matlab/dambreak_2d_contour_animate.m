@@ -9,7 +9,7 @@
 % 位置   (   横向位置<--->3,   纵向位置<--->4    )
 % 速度   (   横向速度<--->5,   纵向速度<--->6    )
 clear;clc;clf; %清空
-contour_variable = 5;
+contour_variable = 2;
 switch contour_variable
     case {1}
       fluid_variable = 'fluid_pressure';wall_variable = 'wall_pressure';
@@ -17,7 +17,7 @@ switch contour_variable
       titlevar = 'pressure' ; %图片标题
     case {2}
       fluid_variable = 'fluid_density';wall_variable = 'wall_density';
-      colorbar_min = 998; colorbar_max = 1012; %colorbar的上下限
+      colorbar_min = 995; colorbar_max = 1012; %colorbar的上下限
       titlevar = 'density' ; %图片标题
     case {3}
       fluid_variable = 'fluid_x';wall_variable = 'wall_x';
@@ -41,9 +41,9 @@ end
 
  
 dt = 0.00005;        %SPH程序模拟的时间步长（单位：s）
-print_step = 200;   %输出时间步间隔
-min_step = 200;     %初始时间步
-max_step = 38000;   %结束时间步
+print_step = 10;   %输出时间步间隔
+min_step = 0;     %初始时间步
+max_step = 200;   %结束时间步
 
 fmin = ones(1,(max_step-min_step)/print_step+1);
 fmax = ones(1,(max_step-min_step)/print_step+1);

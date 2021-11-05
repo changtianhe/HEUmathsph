@@ -51,7 +51,13 @@ c     3-dim. problem: maxngx = maxngy = maxngz ~ maxn^(1/3)
       else if (skf.eq.2) then 
         scale_k = 3 
       else if (skf.eq.3) then 
-         scale_k = 3 
+        scale_k = 3
+      else if (skf.eq.4) then 
+        scale_k = 2
+      else if (skf.eq.5) then 
+        scale_k = 2
+      else if (skf.eq.6) then 
+        scale_k = 2
       endif 
      
       do i=1,ntotal

@@ -56,9 +56,10 @@ c     skf = 1, cubic spline kernel by W4 - Spline (Monaghan 1985)
 c         = 2, Gauss kernel   (Gingold and Monaghan 1981) 
 c         = 3, Quintic kernel (Morris 1997) (不常用）
 c		  = 4, Wendland Quintic (Wendland, 1995)
-c	      = 5, new kernel (hebangqi)
+c	      = 5, new kernel 1 (hebangqi，一阶导单调递增改善压缩失稳)
+c         = 6，new kernel 2 （杨秀峰，2012，一阶导单调递增改善压缩失稳）
       integer skf 
-      parameter(skf = 1)
+      parameter(skf = 3)
 
 
 c     Switches for different senarios

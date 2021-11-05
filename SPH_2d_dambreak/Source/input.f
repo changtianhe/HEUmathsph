@@ -58,7 +58,7 @@ c         read(2,*)im, mass(i), rho(i), p(i), u(i)
      &                      itype, hsml, ntotal)
       write(1,*)'TITLE="fluid particles"'
       write(1,*)'VARIABLES="X","Y","VX","VY","density","pressure"'
-      write(1,*)' ZONE I=50,J= 100, F=POINT'
+      write(1,*)' ZONE I=50,J= 50, F=POINT'
         do i = 1, ntotal 
           write(1,1001) (x(d, i),d = 1, dim), (vx(d, i),d = 1, dim),
      &                rho(i),p(i) 

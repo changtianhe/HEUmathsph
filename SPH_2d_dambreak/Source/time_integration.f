@@ -1,5 +1,5 @@
       subroutine time_integration(x,vx, mass, rho, p, u, c, s, e,itype, 
-     &           hsml, ntotal, maxtimestep, dt )
+     &           hsml, ntotal, nvirt,maxtimestep, dt )
      
 c----------------------------------------------------------------------
 c      x-- coordinates of particles                       [input/output]
@@ -76,9 +76,11 @@ c     velocity half a time step
             
             if (.not.summation_density) then    
               rho_min(i) = rho(i)
-	      temp_rho=0.
-	      if (dim.eq.1) temp_rho=-nsym*rho(i)*vx(1,i)/x(1,i)
+	        temp_rho=0.
+	        if (dim.eq.1) temp_rho=-nsym*rho(i)*vx(1,i)/x(1,i)
               rho(i) = rho(i) +(dt/2.)*( drho(i)+ temp_rho)
+              if (rho(i).lt.990.) rho(i) = 990.
+              if (rho(i).gt.1015.) rho(i) = 1015.
             endif 
            
             do d = 1, dim
@@ -106,8 +108,11 @@ c---  Definition of variables out of the function vector:
          
             if (.not.summation_density ) then
 	      temp_rho=0.
-	      if (dim.eq.1) temp_rho=-nsym*rho(i)*vx(1,i)/x(1,i)
+	        if (dim.eq.1) temp_rho=-nsym*rho(i)*vx(1,i)/x(1,i)
               rho(i) = rho(i) + (dt/2.)* (drho(i)+temp_rho)
+              if (rho(i).lt.990.) rho(i) = 990.
+              if (rho(i).gt.1015.) rho(i) = 1015.
+              
             endif
          
             do d = 1, dim        
@@ -130,6 +135,8 @@ c---  Definition of variables out of the function vector:
               temp_rho=0.
 	      if (dim.eq.1) temp_rho=-nsym*rho(i)*vx(1,i)/x(1,i)        	           
               rho(i) = rho_min(i) + dt*(drho(i)+temp_rho)
+              if (rho(i).lt.990.) rho(i) = 990.
+              if (rho(i).gt.1015.) rho(i) = 1015.
             endif
                   
             do d = 1, dim                   
